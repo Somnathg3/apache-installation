@@ -1,1 +1,33 @@
 
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Update Server') {
+            steps {
+                sh 'sudo apt update -y'
+            }
+        }
+
+        stage('Install Apache2') {
+            steps {
+                sh 'sudo apt install apache2 -y'
+            }
+        }
+
+        stage('Start Apache2') {
+            steps {
+                sh 'sudo systemctl start apache2'
+                sh 'sudo systemctl enable apache2'
+            }
+        }
+
+        stage('Verify Apache2') {
+            steps {
+                sh 'sudo systemctl status apache2 --no-pager'
+            }
+        }
+    }
+}
+
